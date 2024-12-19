@@ -1,8 +1,12 @@
 package com.example.FirstApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -13,4 +17,7 @@ public class Role {
     private Long id ;
     @Enumerated(EnumType.STRING)
     private RoleName rolename;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "role")
+    private Set<UserEntity> user =new HashSet<>();
 }

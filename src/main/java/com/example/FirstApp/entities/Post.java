@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +19,11 @@ public class Post {
     private String body;
     @Temporal(TemporalType.DATE)
     private Date created;
+    @ManyToOne
+    private UserEntity user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
+
 }

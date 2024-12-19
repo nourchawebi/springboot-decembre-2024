@@ -1,6 +1,8 @@
 package com.example.FirstApp.serviceImplement;
 
+import com.example.FirstApp.entities.Role;
 import com.example.FirstApp.entities.UserEntity;
+import com.example.FirstApp.repository.RoleRepo;
 import com.example.FirstApp.repository.UserRepo;
 import com.example.FirstApp.services.UserInterface;
 import jakarta.annotation.Resource;
@@ -15,8 +17,13 @@ public class UserImplement implements UserInterface {
 
     @Autowired
     UserRepo userRepository;
+    @Autowired
+    RoleRepo roleRepository;
     @Override
     public UserEntity addUser(UserEntity user) {
+        Role defaulRole= roleRepository.findById(1L).orElse(null);
+
+        user.getRole().add(defaulRole);
         return  userRepository.save(user);
     }
 
