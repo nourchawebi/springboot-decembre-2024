@@ -6,6 +6,7 @@ import com.example.FirstApp.services.UserInterface;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.Map;
 public class UserController {
 @Autowired
     UserInterface userInterface;
-    @GetMapping("/test")
+    @GetMapping("/testuser")
     //@ResponseBody
 
     public String test(){
@@ -74,6 +75,7 @@ public class UserController {
     @PutMapping("/updateuser/{ids}")
     public UserEntity updateuser(@PathVariable("ids")Long id,@RequestBody UserEntity user)
     {return userInterface.updateUser(id,user);}
+  //@PreAuthorize("hasRole('ROLE_ADMIN')")
    @GetMapping("/getAllusers")
     public   List<UserEntity> getAllUsers()
    {

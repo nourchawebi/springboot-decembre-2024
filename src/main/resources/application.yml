@@ -1,0 +1,56 @@
+
+
+server:
+  port: 8081
+
+
+lombok:
+  addLombokGeneratedAnnotation: true
+
+#http://localhost:8086/realms/master/.well-known/openid-configuration
+spring:
+  application:
+    name: FirstApp
+  datasource:
+    url: jdbc:mysql://localhost:3306/FirstApp?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: ""
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          demo:
+#            client-id: demo
+#            client-secret: b8sXuGCGle6Ofvikw80EKpI4X2b1RwI7
+            client-id: angular
+            provider: keycloak
+            scope: openid, profile, email #Indique les informations auxquelles l'application souhaite accéder après l'authentification. Les scopes demandés sont
+            authorization-grant-type: client_credentials # Spécifie le type de flux OAuth2 utilisé. Ici, il s'agit de client_credentials
+        provider: #Configure les détails spécifiques au fournisseur Keycloak.
+          keycloak:
+            # L'URI de l'émetteur. Ici, c'est l'URL du realm demo de Keycloak. Elle indique que toutes
+            #les configurations (authentification, jetons, etc.) sont gérées dans ce realm.
+            issuer-uri: http://localhost:8086/realms/master/
+
+            # URL utilisée pour obtenir des jetons d'accès OAuth2. Keycloak fournit un endpoint pour cela
+            token-uri: http://localhost:8086/realms/master/protocol/openid-connect/token
+            # Endpoint pour initier le processus d'authentification (souvent utilisé dans le flux Authorization Code).
+            authorization-uri:  http://localhost:8086/realms/master/protocol/openid-connect/auth
+            user-info-uri: http://localhost:8086/realms/master/protocol/openid-connect/userinfo
+            # Endpoint pour récupérer les clés publiques de Keycloak (utilisées pour vérifier la validité des jetons).
+            jwk-set-uri: http://localhost:8086/realms/master/protocol/openid-connect/certs
+
+access:
+  control:
+    origin: http://localhost:4200
+
+logging:
+  level:
+    org.springframework.security: trace

@@ -16,7 +16,7 @@ public class Comment {
 
     private Timestamp created;
     private String body;
-    private String attribute4; // Optional: You can rename it to something meaningful.
+    private String attribute; // Optional: You can rename it to something meaningful.
 
     // One-to-Many relationship with Like
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
